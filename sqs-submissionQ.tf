@@ -1,0 +1,8 @@
+resource "aws_sqs_queue" "submissionQ" {
+  name                      = "submissionQ"
+  delay_seconds             = 0
+  max_message_size          = 262144
+  message_retention_seconds = 1200
+  receive_wait_time_seconds = 0
+  sqs_managed_sse_enabled   = true
+}
