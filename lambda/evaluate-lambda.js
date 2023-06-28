@@ -107,6 +107,32 @@ const processMessage = async (body) => {
     });
 
     await dynamo.send(command);
+
+    // check if points are already awarded to user or not
+
+    await dynamo.send(
+        new QueryCommand(
+            {
+                TableName: tableName,
+                KeyConditionExpression:
+                    "userID = :userID AND quesID = :quesID AND status = :status",
+                ExpressionAttributeValues : {
+                    ":userID" : body.userID,
+                    ":quesID" : body.quesID,
+                    ":status" : "OK"
+                },
+                ConsistentRead: true,
+            },
+            function (err,data) {
+                if(err ) {
+                    console.log('Solution Already Scored',' SubmissionID: ',body.submissionID, data)
+                    body.weight = 0
+                }
+            }
+        )
+    )
+
+    if(body.weight === 0) return
 };
 
 export const handler = async (queueUrl = SQS_QUEUE_URL) => {
