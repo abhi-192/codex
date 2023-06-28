@@ -94,7 +94,19 @@ const processMessage = async (body) => {
 
     // updating solution status - if solution is correct
 
+    command = new UpdateCommand({
+        TableName: tableName,
+        Key: {
+            submissionID: body.submissionID,
+        },
+        UpdateExpression: "set status = :status",
+        ExpressionAttributeValues: {
+            ":status": "OK",
+        },
+        ReturnValues: "ALL_NEW",
+    });
 
+    await dynamo.send(command);
 };
 
 export const handler = async (queueUrl = SQS_QUEUE_URL) => {
