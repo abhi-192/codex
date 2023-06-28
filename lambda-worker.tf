@@ -29,3 +29,12 @@ data "archive_file" "worker_lambda" {
   source_file = "${path.module}/lambda/worker-lambda.js"
   output_path = "${path.module}/lambda/worker-lambda.zip"
 }
+
+resource "aws_lambda_function" "worker_lambda" {
+  filename         = "${path.module}/lambda/worker-lambda.zip"
+  function_name    = "lambda_worker"
+  role             = aws_iam_role.iam_for_worker_lambda.arn
+  handler          = "worker-lambda.handler"
+  source_code_hash = data.archive_file.worker_lambda.output_base64sha256
+  runtime          = "nodejs16.x"
+}
