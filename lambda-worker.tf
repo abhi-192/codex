@@ -38,3 +38,10 @@ resource "aws_lambda_function" "worker_lambda" {
   source_code_hash = data.archive_file.worker_lambda.output_base64sha256
   runtime          = "nodejs16.x"
 }
+
+# Event source mapping to submissionQ
+
+resource "aws_lambda_event_source_mapping" "worker_event_source_mapping" {
+  event_source_arn = aws_sqs_queue.scoreQ.arn
+  function_name    = aws_lambda_function.worker_lambda.arn
+}
