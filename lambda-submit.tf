@@ -63,3 +63,12 @@ resource "aws_lambda_function" "submit_lambda" {
   runtime          = "nodejs16.x"
 }
 
+# permission to access lambda function from API gateway
+
+resource "aws_lambda_permission" "submit_lambda_permission" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.submit_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  statement_id  = "AllowsubmitAPIInvoke"
+  source_arn    = "${aws_api_gateway_rest_api.submit.execution_arn}/*"
+}
