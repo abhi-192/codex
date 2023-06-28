@@ -23,3 +23,9 @@ resource "aws_iam_role_policy_attachment" "worker_lambda_policy" {
   role       = aws_iam_role.iam_for_worker_lambda.name
   policy_arn = each.value
 }
+
+data "archive_file" "worker_lambda" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/worker-lambda.js"
+  output_path = "${path.module}/lambda/worker-lambda.zip"
+}
