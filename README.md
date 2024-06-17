@@ -91,3 +91,8 @@ User bucket is used to store details of users which is used for user request aut
 - Javscript
 - NodeJS
 
+
+### Infrastructure model
+![Infrastructure main model](.infragenie/infrastructure_main_model.svg)
+
+---
