@@ -91,3 +91,5 @@ User bucket is used to store details of users which is used for user request aut
 - Javscript
 - NodeJS
 
+### Infrastructure model
+![abhi-192_codex](https://github.com/abhi-192/codex/assets/173192552/4968975e-73c5-4f53-9d4c-223a60a322eb)
